@@ -3,3 +3,4 @@
 /venv/Lib/
 /venv/Scripts/
 /venv/pyvenv.cfg
+/venv/Lib/site-packages
