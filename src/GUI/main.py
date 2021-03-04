@@ -1,15 +1,21 @@
 import pygame
+import Game.Board.board as Board
 
-HEIGHT = 800
-WIDTH = 800
+
+WINDOW_HEIGHT = 600
+WINDOW_WIDTH = 900
+SQUARE_WIDTH = int(WINDOW_HEIGHT / 8)
+
+
 FPS = 60
 
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 #BOARD = pygame.image.load('../assets/chessboard.png')
 
 
-def drawWindow():
-    WINDOW.blit(BOARD, (0,0))
+def drawWindow(board):
+ #   WINDOW.blit(BOARD, (0,0))
+    drawBoard(board)
     pygame.display.update()
 
 def drawBoard(board):
@@ -31,6 +37,7 @@ def main():
     pygame.init()
     running = True
     clock = pygame.time.Clock()
+    board = Board.Board()
 
     while running:
         clock.tick(FPS)
@@ -38,8 +45,7 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-
-        drawWindow()
+        drawWindow(board)
 
     pygame.quit()
 
