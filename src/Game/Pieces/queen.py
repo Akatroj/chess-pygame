@@ -12,8 +12,6 @@ class Queen(Piece):
         self.symbol = 'q'
         self.last_move = None
 
-
-
     def possible_move(self, board):
 
         move_arr_rook = []
