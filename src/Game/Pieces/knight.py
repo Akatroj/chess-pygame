@@ -10,6 +10,10 @@ class Knight(Piece):
         super().__init__(color, x, y)
         sprite_path = "../assets/{}n.png".format(self.color)
         self.sprite = pygame.transform.scale(pygame.image.load(sprite_path), (SQUARE_SIZE, SQUARE_SIZE))
+        self.symbol = 'n'
+        self.last_move = None
+
+
 
     def possible_move(self, board):
 
@@ -21,10 +25,10 @@ class Knight(Piece):
                 newX = self.x + i
                 newY = self.y + j
                 if math.fabs(i) != math.fabs(j) and is_on_board(newX, newY):
-                    if board[newX][newY] is None:
+                    if board.board_arr[newX][newY] is None:
                         move_arr.append([newX, newY])
                     else:
-                        if board[newX][newY].color != self.color:
+                        if board.board_arr[newX][newY].color != self.color:
                             capture_arr.append([newX, newY])
 
         return move_arr, capture_arr
