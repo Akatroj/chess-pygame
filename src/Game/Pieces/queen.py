@@ -9,6 +9,10 @@ class Queen(Piece):
         super().__init__(color, x, y)
         sprite_path = "../assets/{}q.png".format(self.color)
         self.sprite = pygame.transform.scale(pygame.image.load(sprite_path), (SQUARE_SIZE, SQUARE_SIZE))
+        self.symbol = 'q'
+        self.last_move = None
+
+
 
     def possible_move(self, board):
 
@@ -16,8 +20,8 @@ class Queen(Piece):
         capture_arr_rook = []
         move_arr_bishop = []
         capture_arr_bishop = []
-        move_arr_rook, capture_arr_rook = Piece.rook_move(self, board)
-        move_arr_bishop, capture_arr_bishop = Piece.bishop_move(self, board)
+        move_arr_rook, capture_arr_rook = Piece.rook_move(self, board.board_arr)
+        move_arr_bishop, capture_arr_bishop = Piece.bishop_move(self, board.board_arr)
         move_arr = move_arr_bishop + move_arr_rook
         capture_arr = capture_arr_bishop + capture_arr_rook
 

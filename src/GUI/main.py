@@ -27,10 +27,15 @@ def main():
                 running = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                # print(board_arr.convert_position(board_pos[0], board_pos[1]))
                 # Highlight and start dragging piece upon clicking
                 if selected is None:
-                    piece = board.get_piece_at_position(board_pos)
-                    if piece is not None and piece.color == board.current_player:
+                    if board_pos[0] >= settings.BOARD_SIZE or board_pos[1] >= settings.BOARD_SIZE:
+                        piece = None
+                    else:
+                        piece = board.get_piece_at_position(board_pos)
+                    # if piece is not None and piece.color == board_arr.current_player:
+                    if piece is not None and piece.color == board.arr[0]:
                         selected = dragged = piece
                         piece_original_position = board_pos
                     # Drop the piece upon clicking on it again
@@ -54,7 +59,8 @@ def main():
                 if mouse_pos[0] > settings.BOARD_WIDTH or mouse_pos[1] > settings.BOARD_HEIGHT:
                     dragged = None
                     selected = None
-                draw(board, selected, dragged, mouse_pos)
+                if dragged is not None:
+                    draw(board, selected, dragged, mouse_pos)
 
     pygame.quit()
 
