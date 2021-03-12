@@ -1,5 +1,9 @@
 import pygame
 import settings
+import Game.Pieces.knight as Knight
+import Game.Pieces.queen as Queen
+import Game.Pieces.rook as Rook
+import Game.Pieces.bishop as Bishop
 
 
 WINDOW = pygame.display.set_mode((settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT))
@@ -10,10 +14,19 @@ pygame.font.init()
 font = pygame.font.SysFont('Arial', settings.FONT_SIZE)
 
 
-def draw(board, selected_piece, dragged_piece, mouse_pos):
+PROMOTION_ARRAY_WHITE = [
+    Queen.Queen('w', 0, 0), Knight.Knight('w', 0, 1), Rook.Rook('w', 0, 2), Bishop.Bishop('w', 0, 3)
+]
+
+PROMOTION_ARRAY_BLACK = [
+    Bishop.Bishop('b', 0, 4), Rook.Rook('b', 0, 5), Knight.Knight('b', 0, 6), Queen.Queen('b', 0, 7)
+]
+
+
+def draw(board, selected_piece, dragged_piece, mouse_pos, piece_to_promote):
     draw_board(board, selected_piece)
     if selected_piece is not None:
-        moves, captures = selected_piece.possible_move(board)
+        moves, captures = board.legal(selected_piece)
         draw_possible_moves(moves)
         draw_possible_captures(captures)
     draw_pieces(board, dragged_piece)
@@ -21,6 +34,10 @@ def draw(board, selected_piece, dragged_piece, mouse_pos):
     if dragged_piece is not None:
         draw_dragged_piece(dragged_piece, mouse_pos)
     draw_coordinates()
+
+    if piece_to_promote is not None:
+        draw_promotion_window(piece_to_promote)
+
     pygame.display.update()
 
 
@@ -127,3 +144,27 @@ def draw_coordinates():
 
         surface = font.render(chr(ord('a') + i), True, color)
         WINDOW.blit(surface, (x, y))
+
+
+def draw_promotion_window(piece_to_promote):
+    if piece_to_promote.color == 'w':
+        x = piece_to_promote.x * settings.SQUARE_SIZE
+        y = piece_to_promote.y * settings.SQUARE_SIZE
+        pygame.draw.rect(WINDOW, settings.PROMOTION_WINDOW_COLOR,
+                         pygame.Rect(x, y,
+                                     settings.PROMOTION_WINDOW_WIDTH, settings.PROMOTION_WINDOW_HEIGHT))
+        for i in range(len(PROMOTION_ARRAY_WHITE)):
+            piece = PROMOTION_ARRAY_WHITE[i]
+            WINDOW.blit(piece.sprite, (x, i * settings.SQUARE_SIZE))
+    else:
+        x = piece_to_promote.x * settings.SQUARE_SIZE
+        y = (piece_to_promote.y - 3) * settings.SQUARE_SIZE
+        pygame.draw.rect(WINDOW, settings.PROMOTION_WINDOW_COLOR,
+                         pygame.Rect(x, y,
+                                     settings.PROMOTION_WINDOW_WIDTH, settings.PROMOTION_WINDOW_HEIGHT))
+        for i in range(len(PROMOTION_ARRAY_BLACK)):
+            piece = PROMOTION_ARRAY_BLACK[i]
+            WINDOW.blit(piece.sprite, (x, (i+4)*settings.SQUARE_SIZE))
+
+
+

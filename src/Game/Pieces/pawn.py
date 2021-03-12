@@ -17,6 +17,7 @@ class Pawn(Piece):
 
     def possible_move(self, board):
 
+        #print("test")
         if self.color == 'w':
             change_position = -1
         else:
@@ -48,7 +49,7 @@ class Pawn(Piece):
 
     def en_passant(self, board, change_position):
 
-        en_passant_arr=[]
+        en_passant_arr = []
         for i in (-1,1):
             if is_on_board(self.x + i, self.y) and type(board.board_arr[self.x + i][self.y]) == Pawn \
                     and board.move_arr and board.move_arr[-1][2] == self.symbol and\

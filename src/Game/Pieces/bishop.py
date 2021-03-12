@@ -18,6 +18,6 @@ class Bishop(Piece):
 
         move_arr = []
         capture_arr = []
-        move_arr, capture_arr = Piece.bishop_move(self, board.board_arr)
+        move_arr, capture_arr = Piece.bishop_move(self, board)
 
         return move_arr, capture_arr

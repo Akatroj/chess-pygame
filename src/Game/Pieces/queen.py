@@ -19,8 +19,8 @@ class Queen(Piece):
         capture_arr_rook = []
         move_arr_bishop = []
         capture_arr_bishop = []
-        move_arr_rook, capture_arr_rook = Piece.rook_move(self, board.board_arr)
-        move_arr_bishop, capture_arr_bishop = Piece.bishop_move(self, board.board_arr)
+        move_arr_rook, capture_arr_rook = Piece.rook_move(self, board)
+        move_arr_bishop, capture_arr_bishop = Piece.bishop_move(self, board)
         move_arr = move_arr_bishop + move_arr_rook
         capture_arr = capture_arr_bishop + capture_arr_rook
 
