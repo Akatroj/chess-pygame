@@ -1,5 +1,4 @@
 import pygame
-import math
 
 from GUI.settings import SQUARE_SIZE
 from Game.Pieces.piece import Piece, is_on_board
@@ -13,23 +12,20 @@ class Knight(Piece):
         self.symbol = 'n'
         self.last_move = None
 
-
-
-    def possible_move(self, board):
-
+    def get_possible_moves(self, board):
         move_arr = []
         capture_arr = []
 
         for i in (-2, -1, 1, 2):
             for j in (-2, -1, 1, 2):
-                newX = self.x + i
-                newY = self.y + j
-                if math.fabs(i) != math.fabs(j) and is_on_board(newX, newY):
-                    if board.board_arr[newX][newY] is None:
-                        move_arr.append([newX, newY])
+                new_x = self.x + i
+                new_y = self.y + j
+                if abs(i) != abs(j) and is_on_board(new_x, new_y):
+                    if board.board_arr[new_x][new_y] is None:
+                        move_arr.append([new_x, new_y])
                     else:
-                        if board.board_arr[newX][newY].color != self.color:
-                            capture_arr.append([newX, newY])
+                        if board.board_arr[new_x][new_y].color != self.color:
+                            capture_arr.append([new_x, new_y])
 
         return move_arr, capture_arr
 

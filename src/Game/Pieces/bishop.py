@@ -12,12 +12,11 @@ class Bishop(Piece):
         self.symbol = 'b'
         self.last_move = None
 
+    def get_possible_moves(self, board):
+        move_arr, capture_arr = self.bishop_move(board)
+        return move_arr, capture_arr
 
-
-    def possible_move(self, board):
-
-        move_arr = []
-        capture_arr = []
-        move_arr, capture_arr = Piece.bishop_move(self, board)
-
+    def bishop_move(self, board):
+        offsets = ((-1, -1), (1, 1), (1, -1), (-1, 1))
+        move_arr, capture_arr = self.generate_moves(board, offsets)
         return move_arr, capture_arr

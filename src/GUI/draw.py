@@ -1,9 +1,9 @@
 import pygame
 import settings
-import Game.Pieces.knight as Knight
-import Game.Pieces.queen as Queen
-import Game.Pieces.rook as Rook
-import Game.Pieces.bishop as Bishop
+from Game.Pieces.bishop import Bishop
+from Game.Pieces.knight import Knight
+from Game.Pieces.queen import Queen
+from Game.Pieces.rook import Rook
 
 
 WINDOW = pygame.display.set_mode((settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT))
@@ -15,33 +15,33 @@ font = pygame.font.SysFont('Arial', settings.FONT_SIZE)
 
 
 PROMOTION_ARRAY_WHITE = [
-    Queen.Queen('w', 0, 0), Knight.Knight('w', 0, 1), Rook.Rook('w', 0, 2), Bishop.Bishop('w', 0, 3)
+    Queen('w', 0, 0), Knight('w', 0, 1), Rook('w', 0, 2), Bishop('w', 0, 3)
 ]
 
 PROMOTION_ARRAY_BLACK = [
-    Bishop.Bishop('b', 0, 4), Rook.Rook('b', 0, 5), Knight.Knight('b', 0, 6), Queen.Queen('b', 0, 7)
+    Bishop('b', 0, 4), Rook('b', 0, 5), Knight('b', 0, 6), Queen('b', 0, 7)
 ]
 
 
-def draw(board, selected_piece, dragged_piece, mouse_pos, piece_to_promote):
-    draw_board(board, selected_piece)
+def draw(board, selected_piece, dragged_piece, moves, captures, mouse_pos, piece_to_promote):
+    _draw_board(board, selected_piece)
     if selected_piece is not None:
-        moves, captures = board.legal(selected_piece)
-        draw_possible_moves(moves)
-        draw_possible_captures(captures)
-    draw_pieces(board, dragged_piece)
-    draw_lines()
+        # moves, captures = board.get_legal_moves(selected_piece)
+        _draw_possible_moves(moves)
+        _draw_possible_captures(captures)
+    _draw_pieces(board, dragged_piece)
+    _draw_lines()
     if dragged_piece is not None:
-        draw_dragged_piece(dragged_piece, mouse_pos)
-    draw_coordinates()
+        _draw_dragged_piece(dragged_piece, mouse_pos)
+    _draw_coordinates()
 
     if piece_to_promote is not None:
-        draw_promotion_window(piece_to_promote)
+        _draw_promotion_window(piece_to_promote)
 
     pygame.display.update()
 
 
-def draw_board(board, selected_piece):
+def _draw_board(board, selected_piece):
     old_pos = None
     new_pos = None
     temp = board.last_move()
@@ -72,21 +72,21 @@ def draw_board(board, selected_piece):
             pygame.draw.rect(WINDOW, color, square)
 
 
-def draw_possible_moves(moves):
+def _draw_possible_moves(moves):
     for move in moves:
         x = move[0] * settings.SQUARE_SIZE
         y = move[1] * settings.SQUARE_SIZE
-        draw_highlighted_border(x, y, settings.SQUARE_SIZE, settings.SQUARE_SIZE, settings.MOVE_COLOR)
+        _draw_highlighted_border(x, y, settings.SQUARE_SIZE, settings.SQUARE_SIZE, settings.MOVE_COLOR)
 
 
-def draw_possible_captures(captures):
+def _draw_possible_captures(captures):
     for capture in captures:
         x = capture[0] * settings.SQUARE_SIZE
         y = capture[1] * settings.SQUARE_SIZE
-        draw_highlighted_border(x, y, settings.SQUARE_SIZE, settings.SQUARE_SIZE, settings.CAPTURE_COLOR)
+        _draw_highlighted_border(x, y, settings.SQUARE_SIZE, settings.SQUARE_SIZE, settings.CAPTURE_COLOR)
 
 
-def draw_highlighted_border(x, y, width, height, color):
+def _draw_highlighted_border(x, y, width, height, color):
     height = height  # - 2
     width = width  # - 2
 
@@ -101,7 +101,7 @@ def draw_highlighted_border(x, y, width, height, color):
     pygame.draw.rect(WINDOW, color, pygame.Rect(x_end, y_start, settings.HIGHLIGHTED_BORDER_THICKNESS, height))  # right
 
 
-def draw_pieces(board, dragged_piece):
+def _draw_pieces(board, dragged_piece):
     for i in range(len(board.board_arr)):
         for j in range(len(board.board_arr[0])):
             x = i * settings.SQUARE_SIZE
@@ -111,13 +111,13 @@ def draw_pieces(board, dragged_piece):
                 WINDOW.blit(piece.sprite, (x, y))
 
 
-def draw_dragged_piece(dragged_piece, mouse_pos):
+def _draw_dragged_piece(dragged_piece, mouse_pos):
     x = mouse_pos[0] - settings.SQUARE_SIZE//2
     y = mouse_pos[1] - settings.SQUARE_SIZE//2
     WINDOW.blit(dragged_piece.sprite, (x, y))
 
 
-def draw_lines():
+def _draw_lines():
     for i in range(settings.BOARD_SIZE):
         length = i*settings.SQUARE_SIZE-settings.LINE_THICKNESS//2
         vertical_line = pygame.Rect(length, 0, settings.LINE_THICKNESS, settings.BOARD_HEIGHT)
@@ -126,7 +126,7 @@ def draw_lines():
         pygame.draw.rect(WINDOW, settings.LINE_COLOR, horizontal_line)
 
 
-def draw_coordinates():
+def _draw_coordinates():
     # to jest syf
     for i in range(settings.BOARD_SIZE):
         # number
@@ -146,7 +146,7 @@ def draw_coordinates():
         WINDOW.blit(surface, (x, y))
 
 
-def draw_promotion_window(piece_to_promote):
+def _draw_promotion_window(piece_to_promote):
     if piece_to_promote.color == 'w':
         x = piece_to_promote.x * settings.SQUARE_SIZE
         y = piece_to_promote.y * settings.SQUARE_SIZE

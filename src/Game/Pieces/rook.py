@@ -12,15 +12,14 @@ class Rook(Piece):
         self.symbol = 'r'
         self.last_move = None
 
-
-    def possible_move(self, board):
-
-        move_arr = []
-        capture_arr = []
-        move_arr, capture_arr = Piece.rook_move(self, board)
-
+    def get_possible_moves(self, board):
+        move_arr, capture_arr = self.rook_move(board)
         return move_arr, capture_arr
 
+    def rook_move(self, board):
+        offsets = ((-1, 0), (1, 0), (0, -1), (0, 1))
+        move_arr, capture_arr = self.generate_moves(board, offsets)
+        return move_arr, capture_arr
 
 
 

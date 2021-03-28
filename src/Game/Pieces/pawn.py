@@ -1,5 +1,4 @@
 import pygame
-import math
 
 from GUI.settings import SQUARE_SIZE
 from Game.Pieces.piece import Piece, is_on_board
@@ -13,49 +12,47 @@ class Pawn(Piece):
         self.symbol = ' '
         self.last_move = None
 
-
-
-    def possible_move(self, board):
-
-        #print("test")
+    def get_possible_moves(self, board):
         if self.color == 'w':
-            change_position = -1
+            position_change = -1
         else:
-            change_position = 1
+            position_change = 1
 
         move_arr = []
         capture_arr = []
-        newY = self.y + change_position
+        new_y = self.y + position_change
 
-        if is_on_board(self.x, newY) and board.board_arr[self.x][newY] is None:
-            move_arr.append([self.x, newY])
+        # normal moves
+        if is_on_board(self.x, new_y) and board.board_arr[self.x][new_y] is None:
+            move_arr.append([self.x, new_y])
+            if self.last_move is None:
+                new_y = new_y + position_change
+                if board.board_arr[self.x][new_y] is None:
+                    move_arr.append([self.x, new_y])
 
-            if change_position == -1 and self.y == 6 or change_position == 1 and self.y == 1:
-                newY = newY + change_position
-
-                if board.board_arr[self.x][newY] is None:
-                    move_arr.append([self.x, newY])
-
-        newY = self.y + change_position
+        # captures
+        new_y = self.y + position_change
         for i in (-1, 1):
-            newX = self.x + i
-            if is_on_board(newX, newY) and board.board_arr[newX][newY] is not None:
-                if board.board_arr[newX][newY].color != self.color:
-                    capture_arr.append([newX, newY])
+            new_x = self.x + i
+            if is_on_board(new_x, new_y) and board.board_arr[new_x][new_y] is not None:
+                if board.board_arr[new_x][new_y].color != self.color:
+                    capture_arr.append([new_x, new_y])
 
-        en_passant_arr = self.en_passant(board, change_position)
+        en_passant_arr = self.en_passant(board, position_change)
         capture_arr += en_passant_arr
         return move_arr, capture_arr
 
-    def en_passant(self, board, change_position):
-
+    def en_passant(self, board, position_change):
         en_passant_arr = []
-        for i in (-1,1):
-            if is_on_board(self.x + i, self.y) and type(board.board_arr[self.x + i][self.y]) == Pawn \
-                    and board.move_arr and board.move_arr[-1][2] == self.symbol and\
-                    board.move_arr[-1][4][0] == self.x + i and math.fabs(board.move_arr[-1][4][1]- board.move_arr[-1][3][1]) == 2 \
-                    and board.board_arr[self.x][self.y].color != board.board_arr[self.x + i][self.y].color :
-                en_passant_arr.append([self.x + i , self.y + change_position])
+        for i in (-1, 1):
+            if is_on_board(self.x + i, self.y):
+                possible_target = board.board_arr[self.x + i][self.y]
+                if type(possible_target) == Pawn and self.color != possible_target.color:
+                    last_move = board.last_move()
+                    if last_move is not None and last_move[2] == self.symbol and last_move[4][0] == self.x + i \
+                            and abs(last_move[4][1] - last_move[3][1]) == 2:
+                        en_passant_arr.append([self.x + i, self.y + position_change])
+
         return en_passant_arr
 
 
