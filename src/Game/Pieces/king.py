@@ -1,6 +1,6 @@
-import pygame
-from GUI.settings import SQUARE_SIZE
 from Game.Pieces.piece import Piece, is_on_board
+import Game.AI.position_points as pp
+import Game.Pieces.piece_sprites as ps
 
 
 def can_castle(rook):
@@ -10,10 +10,12 @@ def can_castle(rook):
 class King(Piece):
     def __init__(self, color, x, y):
         super().__init__(color, x, y)
-        sprite_path = "../assets/{}k.png".format(self.color)
-        self.sprite = pygame.transform.scale(pygame.image.load(sprite_path), (SQUARE_SIZE, SQUARE_SIZE))
         self.symbol = 'k'
+        self.sprite = ps.piece_sprites(self)
         self.last_move = None
+
+        self.points = 900 if self.color == 'w' else -900
+        self.position_points = pp.get_position_points(self)
 
     def get_possible_moves(self, board):
         move_arr = []
