@@ -1,16 +1,18 @@
-import pygame
-
-from GUI.settings import SQUARE_SIZE
 from Game.Pieces.piece import Piece, is_on_board
+
+import Game.AI.position_points as pp
+import Game.Pieces.piece_sprites as ps
 
 
 class Pawn(Piece):
     def __init__(self, color, x, y):
         super().__init__(color, x, y)
-        sprite_path = "../assets/{}p.png".format(self.color)
-        self.sprite = pygame.transform.scale(pygame.image.load(sprite_path), (SQUARE_SIZE, SQUARE_SIZE))
         self.symbol = ' '
+        self.sprite = ps.piece_sprites(self)
         self.last_move = None
+
+        self.points = 10 if self.color == 'w' else -10
+        self.position_points = pp.get_position_points(self)
 
     def get_possible_moves(self, board):
         if self.color == 'w':

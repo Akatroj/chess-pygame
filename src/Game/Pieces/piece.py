@@ -1,5 +1,4 @@
-def is_on_board(x, y):
-    return 0 <= x <= 7 and 0 <= y <= 7
+from Game.utils import is_on_board
 
 
 class Piece:
@@ -10,9 +9,6 @@ class Piece:
         self.sprite = None
         self.symbol = None
         self.last_move = None
-
-    def get_possible_moves(self, board):
-        pass
 
     def get_position(self):
         return [self.x, self.y]
