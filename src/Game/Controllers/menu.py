@@ -40,5 +40,4 @@ class Menu:
         if self.quit_button.collidepoint(mouse_pos):
             self.running = False
 
-        # game.start_ai_against_ai()
 

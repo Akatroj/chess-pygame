@@ -2,7 +2,7 @@ from Game.Pieces.bishop import Bishop
 from Game.Pieces.piece import Piece
 from Game.Pieces.rook import Rook
 import Game.AI.position_points as pp
-import Game.Pieces.piece_sprites as ps
+import GUI.piece_sprites as ps
 
 
 class Queen(Rook, Bishop, Piece):

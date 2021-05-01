@@ -1,6 +1,6 @@
 from Game.Pieces.piece import Piece
 import Game.AI.position_points as pp
-import Game.Pieces.piece_sprites as ps
+import GUI.piece_sprites as ps
 
 
 class Rook(Piece):

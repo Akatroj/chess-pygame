@@ -1,10 +1,8 @@
 import pygame
-
-
-# returns a list of 4 pairs (color, border) - one for each side of rectangle
 import settings
 
 
+# returns a list of 4 pairs (color, border) - one for each side of rectangle
 def colored_rectangle_border(x_start, y_start, width, height, color, thickness):
     result = []
 
@@ -19,9 +17,9 @@ def colored_rectangle_border(x_start, y_start, width, height, color, thickness):
     return result
 
 
-def make_button_surface(font, button, text):
+def make_button_surface(font, button, text, color):
     result = pygame.Surface((settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), pygame.SRCALPHA, 32)
-    pygame.draw.rect(result, settings.MENU_BUTTON_COLOR, button)
+    pygame.draw.rect(result, color, button)
     text_surface = font.render(text, True, pygame.Color('#000000'))
     text_rect = text_surface.get_rect()
     text_rect.center = (button.centerx, button.centery)
@@ -35,12 +33,14 @@ def make_button_surface(font, button, text):
     return result
 
 
+# creates a tiny surface, fills it with 2 colors and stretches it
+# using pygame.transform.smoothscale() to achieve a color gradient
 def make_gradient_background(color1, color2):
-    result = pygame.Surface((4,4))
+    result = pygame.Surface((4, 4))
 
     result.fill(color1)
     pygame.draw.rect(result, color2, pygame.Rect(1, 1, 2, 2))
-    result = pygame.transform.smoothscale(result, (settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT))  # stretch!
+    result = pygame.transform.smoothscale(result, (settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT))
 
     return result
 
