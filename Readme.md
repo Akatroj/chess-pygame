@@ -43,30 +43,30 @@ python3 src/main.py || python src/main.py || py src/main.py
 
 </ul>
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/menu-demo.gif" width=auto height=400px alt="Main menu">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/menu-demo.gif" width=auto height=400px alt="Main menu">
 
 
 ### You can move pieces in two ways:
 
 <ul>
   
-<li> Drag the piece from it's current position to the target square </li>
-
 <li> Click on a piece, and then click on the target square </li>
+
+<li> Drag the piece from it's current position to the target square </li>
 
 </ul>
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/gameplay-demo.gif" width=auto height=400px alt="Moving pieces">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/gameplay-demo.gif" width=auto height=400px alt="Moving pieces">
 
 
 ### Remember about king safety
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/check-demo.gif" width=auto height=400px alt="King in check">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/check-demo.gif" width=auto height=400px alt="King in check">
 
 
 ### Don't forget about special moves like *Castling* or *En passant*
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/castling-demo.gif" width=auto height=400px alt="Castling">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/castling-demo.gif" width=auto height=400px alt="Castling">
 
 
 
