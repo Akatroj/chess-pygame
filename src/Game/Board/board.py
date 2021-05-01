@@ -58,23 +58,23 @@ class Board:
         new_position = self.move_arr[-1][4]
         return old_position, new_position
 
-    def get_legal_moves(self, piece , ai=False):
+    def get_legal_moves(self, piece, ai=False):
         move_arr, capture_arr = piece.get_possible_moves(self)
-        move_arr_legal = self._get_legal_array(piece, move_arr,ai)
-        capture_arr_legal = self._get_legal_array(piece, capture_arr,ai)
+        move_arr_legal = self._get_legal_array(piece, move_arr, ai)
+        capture_arr_legal = self._get_legal_array(piece, capture_arr, ai)
         return move_arr_legal, capture_arr_legal
 
-    def _get_legal_array(self, piece, move_arr,ai):
+    def _get_legal_array(self, piece, move_arr, ai):
         result = []
         for move in move_arr:
-            if self._validate_move(piece, move,ai):
+            if self._validate_move(piece, move, ai):
                 result.append(move)
         return result
 
     def move(self, piece, position):
         if _is_move_castling(piece, position):
             self.castle_king(piece, position)
-        elif self._is_move_en_passant(piece, position):
+        elif self.is_move_en_passant(piece, position):
             self.board_arr[position[0]][piece.y] = None
             self._move_piece(piece, position)
             self.move_arr[-1][2] = piece.symbol + " EP"
@@ -87,7 +87,6 @@ class Board:
         else:
             self.next_turn()
         self.check()
-
 
     def _move_piece(self, piece, position):
         self.board_arr[piece.x][piece.y] = None
@@ -123,7 +122,7 @@ class Board:
         captured_piece = self.board_arr[new_x][new_y]
 
         # if the move is en passant, copy the captured piece
-        if self._is_move_en_passant(piece, new_position):
+        if self.is_move_en_passant(piece, new_position):
             captured_en_passant = self.board_arr[new_x][old_y]
             self.board_arr[new_x][old_y] = None
 
@@ -134,14 +133,15 @@ class Board:
 
         opponent_captures = self._get_opponent_captures(self.current_player)
 
+        # if king is trying to castle through attacked position
+        if _is_move_castling(piece, old_position):
+            if math.fabs(new_x - old_x) == 2 and not self._validate_move(piece, [5, new_y], ai) \
+                    or math.fabs(new_x - old_x) == 3 and not self._validate_move(piece, [3, new_y], ai):
+                self._revert_move(piece, captured_piece, old_position, new_position)
+                return False
+
         for capture_position in opponent_captures:
             # if king can get captured in response
-            if math.fabs(piece.points) == 900 and math.fabs(new_x - old_x) > 1 and not ai:
-                if math.fabs(new_x - old_x) == 2 and capture_position == [5,new_y]:
-                    return False
-                if math.fabs(new_x - old_x) == 3 and capture_position == [3,new_y]:
-                    return False
-
             if (self.white_king.get_position() == capture_position and piece.color == 'w') \
                     or (self.black_king.get_position() == capture_position and piece.color == 'b'):
                 self._revert_move(piece, captured_piece, old_position, new_position)
@@ -203,11 +203,10 @@ class Board:
         self.check()
         if self.check_white_king:
             self.winner = 'b'
-            return True
         elif self.check_black_king:
             self.winner = 'w'
-            return True
-        self.winner = 'Draw'
+        else:
+            self.winner = 'Draw'
         return True
 
     def check(self):
@@ -227,8 +226,7 @@ class Board:
                             self.check_white_king = True
                             return
 
-
-    def _is_move_en_passant(self, pawn, new_position):
+    def is_move_en_passant(self, pawn, new_position):
         if type(pawn) != Pawn:
             return False
 

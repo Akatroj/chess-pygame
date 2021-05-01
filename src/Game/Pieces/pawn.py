@@ -1,7 +1,7 @@
 from Game.Pieces.piece import Piece, is_on_board
 
 import Game.AI.position_points as pp
-import Game.Pieces.piece_sprites as ps
+import GUI.piece_sprites as ps
 
 
 class Pawn(Piece):

@@ -26,8 +26,8 @@ class Game:
         self.converted_pos = None
         self.not_gameover = True
         self.can_be_dropped = False
-        self.move_sound = pygame.mixer.Sound("src/assets/sounds/Move.ogg")
-        self.capture_sound = pygame.mixer.Sound("src/assets/sounds/Capture.ogg")
+        self.move_sound = pygame.mixer.Sound(os.path.join(settings.ASSET_FOLDER, 'sounds/Move.ogg'))
+        self.capture_sound = pygame.mixer.Sound(os.path.join(settings.ASSET_FOLDER, 'sounds/Capture.ogg'))
 
         self.clock = pygame.time.Clock()
         self.opponent = AI(self.board, ai_level)
@@ -61,7 +61,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.not_gameover = False
-                pygame.event.post(pygame.event.Event(pygame.QUIT)) # propagate event up
+                pygame.event.post(pygame.event.Event(pygame.QUIT))  # propagate event up
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == LEFT_CLICK:
                     self._handle_lmb_pressed()
@@ -131,6 +131,12 @@ class Game:
     def _automatic_move(self, player):
         if self.board.current_player == player:
             piece_, best_move = self.opponent.mini_max_first_move(0)
+
+            if self.board.get_piece_at_position(best_move) is not None:
+                self.capture_sound.play()
+            else:
+                self.move_sound.play()
+
             self.board.move(piece_, best_move)
             if self.board.piece_to_promote is not None:
                 self.board.promote_pawn(self.board.piece_to_promote, 0)
