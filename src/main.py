@@ -1,10 +1,6 @@
 import pygame
 
-from Game.Board.board import Board
-
-
-board = Board()
-import settings as settings
+import settings
 from Game.Controllers.menu import Menu
 
 
