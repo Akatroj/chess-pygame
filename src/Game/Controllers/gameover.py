@@ -24,7 +24,9 @@ class Gameover:
         self.clock = pygame.time.Clock()
 
     def start(self):
+        self.gameover_drawer.draw()
         pygame.event.clear()
+        time.sleep(1)
         while self.running:
             self.gameover_drawer.draw()
             self.clock.tick(settings.FPS)
