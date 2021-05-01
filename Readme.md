@@ -50,9 +50,9 @@ python3 src/main.py || python src/main.py || py src/main.py
 
 <ul>
   
-#### <li> Drag the piece from it's current position to the target square </li>
+<li> Drag the piece from it's current position to the target square </li>
 
-#### <li> Click on a piece, and then click on the target square </li>
+<li> Click on a piece, and then click on the target square </li>
 
 </ul>
 
