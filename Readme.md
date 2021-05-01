@@ -68,3 +68,7 @@ python3 src/main.py || python src/main.py || py src/main.py
 
 <img src="https://github.com/Akatroj/Chess/blob/master/src/assets/castling-demo.gif" width=auto height=400px alt="Castling">
 
+
+
+# Have fun!
+
