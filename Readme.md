@@ -16,7 +16,7 @@
 
 </ul>
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/menu-demo.gif" width=auto height=400px>
+<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/menu-demo.gif" width=auto height=400px alt="Main menu">
 
 <br />
 
@@ -30,17 +30,17 @@
 
 </ul>
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/gameplay-demo.gif" width=auto height=400px>
+<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/gameplay-demo.gif" width=auto height=400px alt="Moving pieces">
 
 <br />
 
 ### Remember about king safety
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/check-demo.gif" width=auto height=400px>
+<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/check-demo.gif" width=auto height=400px alt="King in check">
 
 <br />
 
 ### Don't forget about special moves like *Castling* or *En passant*
 
-<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/castling-demo.gif" width=auto height=400px>
+<img src="https://github.com/Akatroj/Chess/blob/master/src/assets/castling-demo.gif" width=auto height=400px alt="Castling">
 
