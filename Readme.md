@@ -4,6 +4,33 @@
 
 <br />
 
+# How to run
+
+You need to have python 3 installed on your PC. To start playing, you can use the attached scripts:
+<ul>
+<li> On Windows
+  
+`run.bat`
+  
+</li>
+   
+<li> On Linux 
+  
+`run.sh`
+  
+</li>
+    
+</ul>
+
+or run these commands:
+
+```
+pip3 install -r requirements.txt || pip install -r requirements.txt
+python3 src/main.py || python src/main.py || py src/main.py
+```
+
+<br />
+
 # How to play
 
 ### You can play either vs your friend, or an AI
