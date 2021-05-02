@@ -95,7 +95,7 @@ class Board:
         piece.change_position(position)
         piece.last_move = self.turn_number
         self.board_arr[position[0]][position[1]] = piece
-        self.move_arr.append([self.turn_number, piece.color, piece.symbol, [old_x, old_y], [piece.x, piece.y] ,piece])
+        self.move_arr.append([self.turn_number, piece.color, piece.symbol, [old_x, old_y], [piece.x, piece.y], piece])
         self.turn_number += 1
         self.check_black_king = False
         self.check_white_king = False
@@ -133,10 +133,11 @@ class Board:
 
         opponent_captures = self._get_opponent_captures(self.current_player)
 
-        # if king is trying to castle through attacked position
+        # if king is trying to castle through attacked position or through check
         if _is_move_castling(piece, old_position):
             if math.fabs(new_x - old_x) == 2 and not self._validate_move(piece, [5, new_y], ai) \
-                    or math.fabs(new_x - old_x) == 3 and not self._validate_move(piece, [3, new_y], ai):
+                    or math.fabs(new_x - old_x) == 3 and not self._validate_move(piece, [3, new_y], ai) \
+                    or self.is_in_check(piece):
                 self._revert_move(piece, captured_piece, old_position, new_position)
                 return False
 
@@ -254,3 +255,6 @@ class Board:
             return piece_old
 
 
+    def is_in_check(self, piece):
+        return type(piece) == King \
+               and ((piece.color == 'w' and self.check_white_king) or (piece.color == 'b' and self.check_black_king))
