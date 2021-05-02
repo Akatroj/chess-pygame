@@ -53,9 +53,11 @@ class Game:
             self._set_mouse_pos()
 
             self._automatic_move('b')
-
-            self._handle_events()
             self._check_if_game_over()
+
+            if self.not_gameover:
+                self._handle_events()
+                self._check_if_game_over()
 
     def _handle_events(self):
         for event in pygame.event.get():
