@@ -43,7 +43,7 @@ python3 src/main.py || python src/main.py || py src/main.py
 
 </ul>
 
-<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/menu-demo.gif" width=auto height=400px alt="Main menu">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/assets/demo-images/menu-demo.gif" width=auto height=400px alt="Main menu">
 
 
 ### You can move pieces in two ways:
@@ -56,20 +56,19 @@ python3 src/main.py || python src/main.py || py src/main.py
 
 </ul>
 
-<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/gameplay-demo.gif" width=auto height=400px alt="Moving pieces">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/assets/demo-images/gameplay-demo.gif" width=auto height=400px alt="Moving pieces">
 
 
 ### Remember about king safety
 
-<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/check-demo.gif" width=auto height=400px alt="King in check">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/assets/demo-images/check-demo.gif" width=auto height=400px alt="King in check">
 
 
 ### Don't forget about special moves like *Castling* or *En passant*
 
-<img src="https://github.com/Akatroj/Chess-with-AI/blob/master/src/assets/castling-demo.gif" width=auto height=400px alt="Castling">
+<img src="https://github.com/Akatroj/Chess-with-AI/blob/assets/demo-images/castling-demo.gif" width=auto height=400px alt="Castling">
 
 
 
 # Have fun!
-
 
