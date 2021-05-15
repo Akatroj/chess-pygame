@@ -72,3 +72,4 @@ python3 src/main.py || python src/main.py || py src/main.py
 
 # Have fun!
 
+
