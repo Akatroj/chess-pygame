@@ -1,4 +1,3 @@
-import pygame
 from Game.utils import BOARD_SIZE
 import os.path
 

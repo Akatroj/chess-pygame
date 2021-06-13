@@ -38,11 +38,11 @@ class Game:
             self.redraw()
 
             self.clock.tick(settings.FPS)
-            self._set_mouse_pos()
+            self.__set_mouse_pos()
 
-            self._handle_events()
+            self.__handle_events()
 
-            self._check_if_game_over()
+            self.__check_if_game_over()
 
     def start_against_ai(self):
         pygame.event.clear()
@@ -50,37 +50,40 @@ class Game:
             self.redraw()
 
             self.clock.tick(settings.FPS)
-            self._set_mouse_pos()
+            self.__set_mouse_pos()
 
-            self._automatic_move('b')
-            self._check_if_game_over()
+            self.__automatic_move('b')
+            self.__check_if_game_over()
 
             if self.not_gameover:
-                self._handle_events()
-                self._check_if_game_over()
+                self.__handle_events()
+                self.__check_if_game_over()
 
-    def _handle_events(self):
+    def __handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.not_gameover = False
                 pygame.event.post(pygame.event.Event(pygame.QUIT))  # propagate event up
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == LEFT_CLICK:
-                    self._handle_lmb_pressed()
+                    self.__handle_lmb_pressed()
                 elif event.button == RIGHT_CLICK:
-                    self._drop_piece()
+                    self.__drop_piece()
             elif event.type == pygame.MOUSEBUTTONUP and event.button == LEFT_CLICK:
-                self._handle_lmb_up()
+                self.__handle_lmb_up()
+            elif event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+                self.board.resign()
+                self.not_gameover = False
 
     def redraw(self):
         self.game_drawer.draw(self.selected, self.selected_move_arr, self.selected_capture_arr,
                               self.dragged, self.mouse_pos, self.board.piece_to_promote)
 
-    def _set_mouse_pos(self):
+    def __set_mouse_pos(self):
         self.mouse_pos = pygame.mouse.get_pos()
         self.converted_pos = [a // settings.SQUARE_SIZE for a in self.mouse_pos]
 
-    def _handle_lmb_pressed(self):
+    def __handle_lmb_pressed(self):
         # clicking during promotion
         if self.board.piece_to_promote is not None and self.converted_pos[0] == self.board.piece_to_promote.x:
             choice = self.converted_pos[1]
@@ -96,9 +99,9 @@ class Game:
                 if self.selected == piece:
                     self.dragged = piece
                 else:
-                    self._select_piece(piece)
+                    self.__select_piece(piece)
 
-    def _handle_lmb_up(self):
+    def __handle_lmb_up(self):
         self.dragged = None  # Stop dragging the piece upon releasing mouse button
         if self.selected is not None:
             # Try to move selected piece to target location
@@ -109,28 +112,28 @@ class Game:
                 elif self.converted_pos in self.selected_move_arr:
                     self.board.move(self.selected, self.converted_pos)
                     self.move_sound.play()
-                self._drop_piece()  # drop after attempting move, regardless of outcome
+                self.__drop_piece()  # drop after attempting move, regardless of outcome
 
             elif self.can_be_dropped:  # protects from dropping instantly after selecting
-                self._drop_piece()
+                self.__drop_piece()
             else:
                 self.can_be_dropped = True
 
-    def _select_piece(self, piece):
+    def __select_piece(self, piece):
         if piece is not None and piece.color == self.board.current_player:
             self.selected = self.dragged = piece
             self.selected_move_arr, self.selected_capture_arr = self.board.get_legal_moves(self.selected)
             self.selected_piece_original_position = self.converted_pos
             self.can_be_dropped = False
 
-    def _drop_piece(self):
+    def __drop_piece(self):
         self.selected = None
         self.dragged = None
         self.selected_move_arr = None
         self.selected_capture_arr = None
         self.piece_original_position = None
 
-    def _automatic_move(self, player):
+    def __automatic_move(self, player):
         if self.board.current_player == player:
             piece_, best_move = self.opponent.mini_max_first_move(0)
 
@@ -143,7 +146,7 @@ class Game:
             if self.board.piece_to_promote is not None:
                 self.board.promote_pawn(self.board.piece_to_promote, 0)
 
-    def _check_if_game_over(self):
+    def __check_if_game_over(self):
         if self.board.winner is not None:
             self.not_gameover = False
             self.redraw()

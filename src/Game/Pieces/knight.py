@@ -2,6 +2,7 @@ from Game.Pieces.piece import Piece, is_on_board
 import Game.AI.position_points as pp
 import GUI.piece_sprites as ps
 
+
 class Knight(Piece):
     def __init__(self, color, x, y):
         super().__init__(color, x, y)
@@ -10,7 +11,6 @@ class Knight(Piece):
         self.last_move = None
         self.points = 30 if self.color == 'w' else -30
         self.position_points = pp.get_position_points(self)
-
 
     def get_possible_moves(self, board):
         move_arr = []

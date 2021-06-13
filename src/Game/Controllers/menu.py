@@ -28,9 +28,9 @@ class Menu:
                 if event.type == pygame.QUIT:
                     self.running = False
                 elif event.type == pygame.MOUSEBUTTONUP and event.button == LEFT_CLICK:
-                    self._handle_lmb_up()
+                    self.__handle_lmb_up()
 
-    def _handle_lmb_up(self):
+    def __handle_lmb_up(self):
         game = Game(self.window)
         mouse_pos = pygame.mouse.get_pos()
         if self.singleplayer_button.collidepoint(mouse_pos):
