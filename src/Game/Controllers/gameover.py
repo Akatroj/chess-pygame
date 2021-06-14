@@ -3,7 +3,6 @@ import time
 import pygame
 import settings
 from GUI.gameover_drawer import GameoverDrawer
-from GUI.menu_drawer import MenuDrawer
 from Game.utils import LEFT_CLICK, RIGHT_CLICK
 
 

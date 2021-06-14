@@ -121,11 +121,11 @@ class GameDrawer:
                 or self.board.turn_number != self.cached_turn_number \
                 or self.cached_piece_to_promote != self.board.piece_to_promote:
             # print("refreshing cache")
-            self._cache_full_board_surface(selected_piece, moves, captures, dragged_piece)
+            self.__cache_full_board_surface(selected_piece, moves, captures, dragged_piece)
 
         self.window.blit(self.cached_board_surface, (0, 0))
         if dragged_piece is not None:
-            self._draw_dragged_piece(dragged_piece, mouse_pos)
+            self.__draw_dragged_piece(dragged_piece, mouse_pos)
         elif selected_piece is not None:
             x = selected_piece.x * settings.SQUARE_SIZE
             y = selected_piece.y * settings.SQUARE_SIZE
@@ -159,7 +159,7 @@ class GameDrawer:
                 pygame.draw.rect(self.window, LINE_COLOR,
                                  pygame.Rect(x, y_bottom, settings.BOARD_WIDTH, LINE_THICKNESS))
 
-    def _draw_dragged_piece(self, dragged_piece, mouse_pos):
+    def __draw_dragged_piece(self, dragged_piece, mouse_pos):
         x = mouse_pos[0] - settings.SQUARE_SIZE // 2
         y = mouse_pos[1] - settings.SQUARE_SIZE // 2
         self.window.blit(dragged_piece.sprite, (x, y))
@@ -167,10 +167,10 @@ class GameDrawer:
     # creates a surface of a full chessboard:
     # alternating light/dark squares, colored special squares, piece sprites, lines between squares, coordinates
     # and stores it into cache.
-    def _cache_full_board_surface(self, selected_piece, moves, captures, dragged_piece):
+    def __cache_full_board_surface(self, selected_piece, moves, captures, dragged_piece):
         result = self._empty_board_surface.copy()
-        result.blit(self._highlighted_squares_surface(selected_piece, moves, captures), (0, 0))
-        result.blit(self._piece_sprites_surface(dragged_piece), (0, 0))
+        result.blit(self.__highlighted_squares_surface(selected_piece, moves, captures), (0, 0))
+        result.blit(self.__piece_sprites_surface(dragged_piece), (0, 0))
         result.blit(self._line_surface, (0, 0))
         result.blit(self._coordinates_surface, (0, 0))
 
@@ -180,7 +180,7 @@ class GameDrawer:
         self.cached_piece_to_promote = self.board.piece_to_promote
 
     # returns a transparent surface with all piece sprites, except for the dragged piece
-    def _piece_sprites_surface(self, dragged_piece):
+    def __piece_sprites_surface(self, dragged_piece):
         result = pygame.Surface((settings.BOARD_WIDTH, settings.BOARD_HEIGHT), pygame.SRCALPHA, 32)
         for i in range(BOARD_SIZE):
             for j in range(BOARD_SIZE):
@@ -193,7 +193,7 @@ class GameDrawer:
 
     # returns a transparent surface with colored special squares
     # (last move, selected square, possible moves and possible captures)
-    def _highlighted_squares_surface(self, selected_piece, moves, captures):
+    def __highlighted_squares_surface(self, selected_piece, moves, captures):
         result = pygame.Surface((settings.BOARD_WIDTH, settings.BOARD_HEIGHT), pygame.SRCALPHA, 32)
         special_squares = []
         last_move = self.board.last_move_positions()

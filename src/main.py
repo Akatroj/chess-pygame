@@ -17,8 +17,8 @@ def main():
 
 
 if __name__ == "__main__":
-    # Paweł 1 : 0 Mariusz
-    # Pierwszą gre wygrał Paweł D
+    # Pawel 1 : 0 Mariusz
+    # Pierwsza gre wygral Pawel D
     main()
 
 

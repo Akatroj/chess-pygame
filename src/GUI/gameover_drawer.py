@@ -19,7 +19,7 @@ class GameoverDrawer:
 
         self.background_surface = make_gradient_background(BACKGROUND_COLOR_OUTER, BACKGROUND_COLOR_INNER)
 
-        self.text_surface = self._make_text_surface()
+        self.text_surface = self.__make_text_surface()
 
     def draw(self):
         self.window.blit(self.background_surface, (0, 0))
@@ -27,7 +27,7 @@ class GameoverDrawer:
 
         pygame.display.update()
 
-    def _make_text_surface(self):
+    def __make_text_surface(self):
         result = pygame.Surface((settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), pygame.SRCALPHA, 32)
         text_surface = self.font.render(self.top_text, True, TEXT_COLOR)
         text_rect = text_surface.get_rect()

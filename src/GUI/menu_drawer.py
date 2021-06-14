@@ -30,15 +30,15 @@ class MenuDrawer:
         self.quit_button = None
         self.quit_button_surface = None
 
-        self.top = self._make_top()
+        self.top = self.__make_top()
 
         self.sprite_offset_x = 0
         self.sprite_offset_y = 0
         self.x_multiplier = 1
         self.y_multiplier = 1
 
-        self._make_buttons()
-        self._make_sprite()
+        self.__make_buttons()
+        self.__make_sprite()
 
     def draw(self):
         self.set_sprite_offset()
@@ -51,7 +51,7 @@ class MenuDrawer:
 
         pygame.display.update()
 
-    def _make_buttons(self):
+    def __make_buttons(self):
         x = 50
         width = settings.WINDOW_WIDTH // 4
         height = settings.WINDOW_HEIGHT // 8
@@ -72,7 +72,7 @@ class MenuDrawer:
         self.quit_button_surface = \
             make_button_surface(self.button_font, self.quit_button, "Quit", BUTTON_COLOR)
 
-    def _make_sprite(self):
+    def __make_sprite(self):
         result = pygame.Surface((settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), pygame.SRCALPHA, 32)
         sprite = pygame.image.load(self.sprite_path)
         sprite = pygame.transform.smoothscale(sprite, (175, 300))
@@ -81,7 +81,7 @@ class MenuDrawer:
         self.sprite = result
         pass
 
-    def _make_top(self):
+    def __make_top(self):
         result = pygame.Surface((settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), pygame.SRCALPHA, 32)
         text_surface = self.header_font.render("Chess", True, pygame.Color('#FFFFFF'))
         text_rect = text_surface.get_rect()
